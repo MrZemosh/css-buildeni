@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brigáda - Formuláře</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #2c3e50;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .buttons-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      max-width: 1200px;
+    }
+
+    .modal-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 20px;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .modal-btn:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 12px;
+      width: 680px;
+      max-width: 90vw;
+      max-height: 100vh;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: #f0f0f0;
+      border: none;
+      font-size: 20px;
+      color: #999;
+      cursor: pointer;
+      z-index: 10;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .close-btn:hover {
+      color: #666;
+      background: #e0e0e0;
+    }
+
+    .modal iframe {
+      width: 100%;
+      height: 85vh;
+      border: none;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .buttons-container {
+        grid-template-columns: 1fr;
+      }
+
+      .modal {
+        width: 95vw;
+        margin: 20px;
+      }
+
+      .modal iframe {
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="buttons-container">
+    <button class="modal-btn" onclick="openModal('modal1', 'formular_1.html')">
+      1. Defaultní výchozí<br>
+      (Základní formulář)
+    </tton>
+    
+    <button class="modal-btn" onclick="openModal('modal2', 'formular_2.html')">
+      2. Přihlášení<br>
+      (S přihlašovacími údaji)
+    </button>
+    
+    <button class="modal-btn" onclick="openModal('modal3', 'formular_3.html')">
+      3. Přihlášený odpovědní form<br>
+      (S profilem uživatele)
+    </button>
+    
+    <button class="modal-btn" onclick="openModal('modal4', 'formular_4.html')">
+      4. Pokud ještě nemá účet<br>
+      (Registrace nabídka)
+    </button>
+    
+    <button class="modal-btn" onclick="openModal('modal5', 'formular_5.html')">
+      5. Okno po odpovědi<br>
+      (Registrační formulář)
+    </button>
+  </div>
+
+  <div class="modal-overlay" id="universalModal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <iframe id="modalIframe"></iframe>
+    </div>
+  </div>
+
+  <script>
+    function openModal(modalId, formUrl) {
+      const modal = document.getElementById('universalModal');
+      const iframe = document.getElementById('modalIframe');
+      
+      iframe.src = formUrl;
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('universalModal');
+      const iframe = document.getElementById('modalIframe');
+      
+      modal.classList.remove('show');
+      document.body.style.overflow = 'auto';
+      
+      setTimeout(() => { iframe.src = ''; }, 300);
+    }
+
+    // Close modal on overlay click
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('modal-overlay')) { closeModal(); }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const openModal = document.querySelector('.modal-overlay.show');
+        if (openModal) { closeModal(); }
+      }
+    });
+  </script>
+</body>
+</html>

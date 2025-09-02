@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulář s přihlášením</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: white;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-content {
+            padding: 0;
+        }
+
+        .credentials-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .credentials-title {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .credential-field {
+            width: 100%;
+            background: white;
+            border: 2px solid #333;
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .login-btn {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+            transition: background 0.2s ease;
+        }
+
+        .login-btn:hover {
+            background: #138496;
+        }
+
+        .main-form {
+            padding: 30px 40px 40px 40px;
+        }
+
+        .modal-header {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            color: #888;
+            font-size: 15px;
+            font-weight: normal;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            color: #FF6B35;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 18px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            background: white;
+            color: #333;
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-control.textarea {
+            min-height: 140px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .speech-container {
+            position: relative;
+        }
+
+        .speech-btn {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #999;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+
+        .speech-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .file-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .file-input {
+            flex: 1;
+            padding: 15px 18px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            background: white;
+            color: #aaa;
+        }
+
+        .file-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            min-width: 60px;
+            transition: background 0.2s ease;
+        }
+
+        .file-btn:hover {
+            background: #5a6268;
+        }
+
+        .select-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .form-select {
+            flex: 1;
+            padding: 15px 18px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            background: white;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .form-select option {
+            color: #333;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .delete-link {
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .delete-link:hover {
+            color: #0056b3;
+        }
+
+        .submit-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 80px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #45a049;
+        }
+
+        .privacy-info {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .privacy-info a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .main-form {
+                padding: 20px;
+            }
+
+            .form-row, .file-row, .select-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .submit-btn {
+                padding: 15px 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-content">
+        <div class="credentials-section">
+            <div class="credentials-title">Už máš u nás účet, přihlás se</div>
+            <input type="text" class="credential-field" placeholder="Přihlašovací jméno nebo email">
+            <input type="password" class="credential-field" placeholder="Heslo">
+            <button type="button" class="login-btn">Přihlásit do profilu brigádníky</button>
+        </div>
+
+        <div class="main-form">
+            <div class="modal-header">
+                <div class="modal-title">Odpovídáš na inzerát:</div>
+                <div class="modal-subtitle">Brigáda (Praha - Hlubočepy)</div>
+            </div>
+
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Martina">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Test">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="martina@fajn-brigady.cz">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" placeholder="+420112345678">
+                    </div>
+                </div>
+
+                <div class="form-group speech-container">
+                    <textarea class="form-control textarea" placeholder="Zpráva*"></textarea>
+                    <button type="button" class="speech-btn" title="reset textu">🎤</button>
+                </div>
+
+                <div class="file-row">
+                    <input type="text" class="file-input" placeholder="WhatsApp Image 2025-06-09 at 11.35.06 (...)" readonly>
+                    <button type="button" class="file-btn">...</button>
+                </div>
+
+                <div class="file-row">
+                    <input type="text" class="file-input" placeholder="Další příloha" readonly>
+                    <button type="button" class="file-btn">...</button>
+                </div>
+
+                <div class="select-row">
+                    <select class="form-select">
+                        <option>Jaké směny preferujete?</option>
+                        <option>Nic nevybráno</option>
+                        <option>Ranní</option>
+                        <option>Odpolední</option>
+                        <option>Večerní</option>
+                        <option>Noční</option>
+                    </select>
+                    <select class="form-select">
+                        <option>Je Vám více než 18 let?</option>
+                        <option>Zvolte</option>
+                        <option>Ano</option>
+                        <option>Ne</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Pracoval jste už v obchodě?" rows="3"></textarea>
+                </div>
+
+                <div class="submit-section">
+                    <a href="#" class="delete-link">Smazat uložené údaje</a><br>
+                    <button type="submit" class="submit-btn">ODESLAT</button>
+                    <div class="privacy-info">
+                        Informace o <a href="#">zpracování osobních údajů</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
